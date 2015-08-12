@@ -42,12 +42,14 @@ nodejs_npm 'grunt-cli'
 # prepara a aplicação para rodar
 application node['uaitinode']['project_name'] do
 	path node['uaitinode']['app_path']
+	owner 'www-data'
+	group 'www-data'
 
 	packages ["git"]
 
 	repository node['uaitinode']['app_repository']
 
 	nodejs do
-		entry_point 
+		entry_point node['uaitinode']['entry_point']
 	end
 end

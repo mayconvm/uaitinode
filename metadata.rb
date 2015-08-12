@@ -8,4 +8,4 @@ version          '0.1.0'
 
 depends 'nodejs', '~> 2.4.0'
 depends 'mongodb', '~> 0.16.2'
-depends 'application_nodejs', '~> 2.0.1'
+depends 'application_nodejs'
