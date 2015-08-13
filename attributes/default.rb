@@ -1,3 +1,6 @@
+# general server
+default['uaitinode']['project_name']            = 'project'
+
 # httpd
 default['uaitinode']['server_name']             = 'nodeproject.com'
 default['uaitinode']['nginx_file']              = 'nodeproject.com'
