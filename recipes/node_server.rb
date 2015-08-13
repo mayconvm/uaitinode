@@ -42,7 +42,7 @@ nodejs_npm 'grunt-cli'
 
 
 # prepara a aplicação para rodar
-application node['uaitinode']['project_name'] do
+application node['uaitilinuxserver']['project_name'] do
 	path node['uaitinode']['app_path']
 	owner node['uaitilinuxserver']['server_user']
 	group node['uaitilinuxserver']['server_user']
