@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
-include_recipe "uaitinode::_common"
+include_recipe "uaitilinuxserver"
 
 package 'nginx' do
 	action :install
@@ -18,6 +18,8 @@ end
 # template de configuracao do servidor http
 directory node['uaitinode']['app_path'] do
 	mode '0755'
+	owner node['uaitilinuxserver']['server_user']
+	group node['uaitilinuxserver']['server_user']
 	recursive true
 	action :create
 end
@@ -42,8 +44,8 @@ nodejs_npm 'grunt-cli'
 # prepara a aplicação para rodar
 application node['uaitinode']['project_name'] do
 	path node['uaitinode']['app_path']
-	owner 'www-data'
-	group 'www-data'
+	owner node['uaitilinuxserver']['server_user']
+	group node['uaitilinuxserver']['server_user']
 
 	packages ["git"]
 
