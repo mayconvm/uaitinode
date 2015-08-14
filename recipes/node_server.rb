@@ -52,6 +52,7 @@ application node['uaitinode']['project_name'] do
 	repository node['uaitinode']['app_repository']
 
 	nodejs do
+		npm true
 		entry_point node['uaitinode']['entry_point']
 	end
 end
