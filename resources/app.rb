@@ -13,6 +13,7 @@ attribute :server_name,		:kind_of => String
 attribute :port, 			:kind_of => String
 attribute :entry_point, 	:kind_of => String
 attribute :app_repository, 	:kind_of => String
+attribute :repository_key, 	:kind_of => [String, FalseClass], default: false
 attribute :user, 			:kind_of => String
 attribute :nginx,			:kind_of => [NilClass, TrueClass, FalseClass], default: true
 attribute :nginx_file, 		:kind_of => String
