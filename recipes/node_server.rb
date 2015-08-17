@@ -6,53 +6,12 @@
 
 include_recipe "uaitilinuxserver"
 
-package 'nginx' do
-	action :install
-end
-
-service 'nginx' do
-	supports :status => true, :restart => true, :reload => true
-end
-
-
-# template de configuracao do servidor http
-directory node['uaitinode']['app_path'] do
-	mode '0755'
-	owner node['uaitilinuxserver']['server_user']
-	group node['uaitilinuxserver']['server_user']
-	recursive true
-	action :create
-end
-
-template '/etc/nginx/sites-enabled/' + node['uaitinode']['nginx_file'] do
-	source 'project.erb'
-end
-template '/etc/nginx/sites-enabled/default' do
-	source 'default.erb'
-	manage_symlink_source true
-	notifies :reload, 'service[nginx]', :immediately
-end
-
-
-# instala o nvm / nodejs
-node.default['nodejs']['install_method'] = 'package'
-include_recipe 'nodejs::npm'
-nodejs_npm 'bower'
-nodejs_npm 'grunt-cli'
-
-
-# prepara a aplicação para rodar
-application node['uaitinode']['project_name'] do
-	path node['uaitinode']['app_path']
-	owner node['uaitilinuxserver']['server_user']
-	group node['uaitilinuxserver']['server_user']
-
-	packages ["git"]
-
-	repository node['uaitinode']['app_repository']
-
-	nodejs do
-		npm true
-		entry_point node['uaitinode']['entry_point']
-	end
+uaitinode_app node['uaitinode']['project_name'] do
+	server_name     node['uaitinode']['server_name']
+    port            node['uaitinode']['app_port']
+	nginx_file 		node['uaitinode']['nginx_file']
+	path 			node['uaitinode']['app_path']
+	entry_point 	node['uaitinode']['entry_point']
+	app_repository  node['uaitinode']['app_repository']
+	npm_packages	['bower', 'grunt-cli']
 end

@@ -1,13 +1,13 @@
 upstream node {
-        server 127.0.0.1:<%= node['uaitinode']['app_port'] %>;
+        server 127.0.0.1:<%= @app_port %>;
 }
 
 server {
 
-    root <%= node['uaitinode']['app_path'] %>;
+    root <%= @app_path %>;
     index index.html index.htm;
 
-    server_name <%= node['uaitinode']['server_name'] %>;
+    server_name <%= @server_name %>;
 
     # Conf gzip
     gzip_static on;
@@ -20,7 +20,7 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         try_files $uri $uri/ /index.html;
         if (!-f $request_filename) {
-            proxy_pass http://127.0.0.1:<%= node['uaitinode']['app_port'] %>; # node
+            proxy_pass http://127.0.0.1:<%= @app_port %>; # node
             break;
         }
     }
