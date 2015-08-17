@@ -7,40 +7,9 @@
 use_inline_resources
 
 action :install do
-	# include_recipe "uaitilinuxserver"
 
-	# instala o nginx
-	package 'nginx' do
-		action :install
-	end
+	install_nginx if new_resource.nginx
 
-	service 'nginx' do
-		supports :status => true, :restart => true, :reload => true
-	end
-
-	# template de configuracao do servidor http
-	directory new_resource.path do
-		mode '0755'
-		owner new_resource.user
-		group new_resource.user
-		recursive true
-		action :create
-	end
-
-	template '/etc/nginx/sites-enabled/' + new_resource.nginx_file do
-		source 'project.erb'
-		variables({
-			:app_port 	 => new_resource.port,
-			:app_path 	 => new_resource.path,
-			:server_name => new_resource.server_name
-		})
-	end
-	template '/etc/nginx/sites-enabled/default' do
-		source 'default.erb'
-		manage_symlink_source true
-		notifies :reload, 'service[nginx]', :immediately
-	end
-	
 	# instala o nodejs
 	node.default['nodejs']['install_method'] = 'package'
 	run_context.include_recipe 'nodejs::npm'
@@ -87,3 +56,38 @@ action :uninstall do
 	end
 end
 
+def install_nginx
+	# instala o nginx
+	package 'nginx' do
+		action :install
+	end
+
+	service 'nginx' do
+		supports :status => true, :restart => true, :reload => true
+	end
+
+	# template de configuracao do servidor http
+	directory new_resource.path do
+		mode '0755'
+		owner new_resource.user
+		group new_resource.user
+		recursive true
+		action :create
+	end
+
+	template '/etc/nginx/sites-enabled/' + new_resource.nginx_file do
+		source new_resource.nginx_template ? new_resource.nginx_template : 'project.erb'
+		cookbook new_resource.nginx_template ? new_resource.cookbook_name.to_s : 'uaitinode'
+		variables({
+			:app_port 	 => new_resource.port,
+			:app_path 	 => new_resource.path,
+			:server_name => new_resource.server_name
+		})
+
+	end
+	template '/etc/nginx/sites-enabled/default' do
+		source 'default.erb'
+		manage_symlink_source true
+		notifies :reload, 'service[nginx]', :immediately
+	end
+end

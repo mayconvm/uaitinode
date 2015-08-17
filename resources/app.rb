@@ -14,7 +14,9 @@ attribute :port, 			:kind_of => String
 attribute :entry_point, 	:kind_of => String
 attribute :app_repository, 	:kind_of => String
 attribute :user, 			:kind_of => String
+attribute :nginx,			:kind_of => [NilClass, TrueClass, FalseClass], default: true
 attribute :nginx_file, 		:kind_of => String
+attribute :nginx_template,  :kind_of => [String, FalseClass], default: false
 attribute :npm_packages, 	:kind_of => Array, :default => []
 
 # def initialize(*args)
