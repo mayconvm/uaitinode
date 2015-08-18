@@ -29,7 +29,7 @@ action :install do
 		packages ["git"]
 
 		repository app_resource.app_repository
-		deploy_key app_resource.repository_key
+		deploy_key app_resource.repository_key ? app_resource.repository_key : nil
 
 		nodejs do
 			npm true
