@@ -6,4 +6,4 @@
 
 include_recipe "uaitilinuxserver"
 
-include_recipe "mongodb::default"
+include_recipe "mongodb3::default"
