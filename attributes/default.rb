@@ -6,11 +6,11 @@ default['uaitinode']['server_name']             = 'nodeproject.com'
 default['uaitinode']['nginx_file']              = 'nodeproject.com'
 
 
-# node 
+# node
 default['uaitinode']['app_port']                = '3030'
 default['uaitinode']['app_path']                = '/var/www/html/' + node['uaitinode']['project_name']
 default['uaitinode']['entry_point']             = 'app.js'
 default['uaitinode']['app_repository']          = 'https://github.com/uaiti/etrack.git'
 
 # mongodb
-node.default['mongodb']['config']['smallfiles'] = true
+default['mongodb3']['config']['mongod']['storage']['mmapv1']['smallFiles'] = true #versão 3.0
