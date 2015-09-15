@@ -8,5 +8,5 @@ version          '0.1.0'
 
 depends 'uaitilinuxserver'
 depends 'nodejs', '~> 2.4.0'
-depends 'mongodb', '~> 0.16.2'
+depends 'mongodb3', '~> 2.0.0'
 depends 'application_nodejs'
